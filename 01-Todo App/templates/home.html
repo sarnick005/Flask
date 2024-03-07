@@ -1,0 +1,16 @@
+{% block title %}
+  <h2>All Task</h2>
+{% endblock %}
+
+{% block content %}
+  <button><a href="/new_task">New Task</a></button>
+    {% for todo in todos %}
+    <div class="container">
+      <div class="todo">
+        <h2>{{ todo[1] }}</h2>
+        <h4>{{ todo[2] }}</h4>
+      </div>
+      <hr>
+    </div>
+    {% endfor %}
+ {% endblock %}

@@ -1,0 +1,8 @@
+pip install flask
+pip install mysql-connector-python
+pip install flask-wtf
+pip install wtforms
+
+
+How to generate secret key:
+terminal-> python-> import os-> os.urandom(12).hex()-> copy and use it 

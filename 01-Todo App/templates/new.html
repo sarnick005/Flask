@@ -1,0 +1,19 @@
+{% block title %}
+  New Task
+{% endblock %}
+
+{% block content %}
+  <form method="POST">
+    {{form.hidden_tag()}}
+    {{ form.title.label(class="form-label") }}
+    {{ form.title(class="form-control", placeholder="Title") }}
+    <br>
+    {{ form.description.label(class="form-label") }}
+    {{ form.description(class="form-control", placeholder="Description") }}
+    <br>
+    {{ form.due_date.label(class="form-label") }}
+    {{ form.due_date(class="form-control", placeholder="Due Date") }}
+    <br>
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+{% endblock %}
