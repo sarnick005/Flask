@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for,request
 import mysql.connector
 from forms import NewTaskForm
 from config import DB_PASSWORD, SECRET_KEY
@@ -50,6 +50,55 @@ def new_task():
         return redirect(url_for("home"))
 
     return render_template("new.html", form=form)
+
+# EDIT ROUTE
+
+@app.route("/edit_task/<task_id>", methods=["GET", "POST"])
+def edit_task(task_id):
+    form = NewTaskForm()
+    mycursor = mydb.cursor()
+
+    select_query = "SELECT * FROM todo_table WHERE id = %s"
+    mycursor.execute(select_query, (task_id,))
+    todo_data = mycursor.fetchone()
+
+    if todo_data:
+        if request.method == "POST" and form.validate_on_submit():
+            title = request.form["title"]
+            description = request.form["description"]
+            due_date = request.form["due_date"]
+
+            update_query = "UPDATE todo_table SET title = %s, description = %s, due_date = %s WHERE id = %s"
+            update_data = (title, description, due_date, task_id)
+            mycursor.execute(update_query, update_data)
+            mydb.commit()
+            return redirect(url_for("home")) 
+        form.title.data = todo_data[1]
+        form.description.data = todo_data[2]
+        form.due_date.data = todo_data[4]
+
+        return render_template("edit.html", form=form)
+    else:
+        return "Todo with ID {} not found".format(task_id), 404
+
+
+# DELETE TASK
+
+@app.route("/delete_task/<task_id>", methods=["POST"])
+def delete_task(task_id):
+    mycursor = mydb.cursor()
+    select_query = "SELECT * FROM todo_table WHERE id = %s"
+    mycursor.execute(select_query, (task_id,))
+    todo_data = mycursor.fetchone()
+
+    if todo_data:
+        if request.method == "POST":
+            delete_query = "DELETE FROM todo_table WHERE id = %s"
+            mycursor.execute(delete_query, (task_id,))
+            mydb.commit()
+            return redirect(url_for("home"))
+    else:
+        return "Todo with ID {} not found".format(task_id), 404
 
 
 if __name__ == "__main__":

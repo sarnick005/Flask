@@ -8,3 +8,4 @@ class NewTaskForm(FlaskForm):
     description = StringField(label="Description: ")
     due_date = DateField("Due Date")  
     submit = SubmitField("Add Task")
+

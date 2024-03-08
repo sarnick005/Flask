@@ -1,16 +1,54 @@
-{% block title %}
-  <h2>All Task</h2>
-{% endblock %}
+{% extends "base.html" %} {% block title %} All Task {% endblock %} {% block
+content %} <br /><br /><a class="btn btn-primary" role="button" href="/new_task"
+  >New Task</a
+>
+<br /><br />
+<div class="table-responsive my-2 mx-4">
+  <table class="table table-dark table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Created at</th>
+        <th scope="col">Due date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for todo in todos %}
+      <tr>
+        <td>{{ todo[1] }}</td>
+        <td>{{ todo[2] }}</td>
+        <td>{{ todo[3] }}</td>
+        <td>{{ todo[4] }}</td>
+        <td>
+          {% if todo[5] == 1 %}
+          <a class="btn btn-success" role="button" href="#">Done</a>
+          {% else %}
+          <a class="btn btn-warning" role="button" href="#">Undone</a>
+          {% endif %}
+        </td>
 
-{% block content %}
-  <button><a href="/new_task">New Task</a></button>
-    {% for todo in todos %}
-    <div class="container">
-      <div class="todo">
-        <h2>{{ todo[1] }}</h2>
-        <h4>{{ todo[2] }}</h4>
-      </div>
-      <hr>
-    </div>
-    {% endfor %}
- {% endblock %}
+        <td>
+          <a
+            class="btn btn-secondary"
+            role="button"
+            href="/edit_task/{{ todo[0] }}"
+            >Edit</a
+          >
+        </td>
+        <td>
+          <form method="POST" action="/delete_task/{{ todo[0] }}">
+            <button type="submit" class="btn btn-danger" role="button">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
