@@ -1,22 +1,31 @@
-{% extends 'base.html' %} {% block title %} Add New Task {% endblock %} {% block
-content %}
-<div class="edit-form">
-  <form method="POST" class="p-4">
-    <h3>Add a new task</h3>
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-      {{ form.title.label(class="form-label") }} {{
-      form.title(class="form-control", placeholder="Title") }}
+{% extends 'base.html' %}
+{% block title %} Add New Task {% endblock %}
+{% block content %}
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Add a new task</h3>
+          <form method="POST" class="p-4">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+              {{ form.title.label(class="form-label") }}
+              {{ form.title(class="form-control", placeholder="Title") }}
+            </div>
+            <div class="mb-3">
+              {{ form.description.label(class="form-label") }}
+              {{ form.description(class="form-control", placeholder="Description") }}
+            </div>
+            <div class="mb-3">
+              {{ form.due_date.label(class="form-label") }}
+              {{ form.due_date(class="form-control", placeholder="Due Date") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      {{ form.description.label(class="form-label") }} {{
-      form.description(class="form-control", placeholder="Description") }}
-    </div>
-    <div class="mb-3">
-      {{ form.due_date.label(class="form-label") }} {{
-      form.due_date(class="form-control", placeholder="Due Date") }}
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </div>
 </div>
 {% endblock %}
